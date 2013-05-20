@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.proyecto.MonedaMapper">
+
+	<resultMap type="com.cibertec.dawi.proy.beans.proyecto.MonedaDTO" id="rm_listarMonedas">
+		<id column="idMoneda" jdbcType="INTEGER" property="idMoneda" />
+		<result column="descMoneda" jdbcType="VARCHAR" property="descMoneda" />
+		<result column="simbMoneda" jdbcType="CHAR" property="simbMoneda" />
+	</resultMap>
+
+	<select id="listarMonedas" parameterType="monedaDTO"
+		resultMap="rm_listarMonedas">
+		select * from tb_moneda
+	</select>
+	
+</mapper>

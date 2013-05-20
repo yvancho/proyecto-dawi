@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.proyecto.ProyectoMapper">
+
+   <insert id="registraProy" parameterType="proyDTO" statementType="CALLABLE">
+       {
+       CALL usp_registraProy (
+       		#{descProy, mode=IN, jdbcType=VARCHAR},
+    		#{obsProy mode=IN,jdbcType=LONGVARCHAR	},
+    		#{solicitud.idSol mode=IN,jdbcType=INTEGER}
+		)
+       }
+   </insert>
+    	
+</mapper>

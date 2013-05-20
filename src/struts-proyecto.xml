@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC   
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>    
+    <constant name="struts.multipart.saveDir" value="C:/TEMP"/>
+	<package name="proyecto" namespace="/" extends="tiles-default">         
+     
+	    <interceptors>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">2097152</param>
+					<param name="allowedTypes">application/pdf,application/msword</param>
+				</interceptor-ref>
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams"> dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods"> input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods"> input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+	    
+	   <global-results>
+	   		<result name="listaAprSol" type="tiles">d_aprobarSol</result>         
+	   </global-results>
+	    
+       <action  name="cancelaRegProy"
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="cancelarRegistroProy">
+       </action>
+       
+       <action  name="registrarProy"
+           		class="com.cibertec.dawi.proy.actions.ActionProyecto"
+           		method="registraProy">
+	   		<result name="success">/pages/results/exito.jsp</result>
+       </action>
+     </package>
+    
+</struts>	
+    

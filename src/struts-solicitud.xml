@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC   
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>    
+    <constant name="struts.multipart.saveDir" value="C:/TEMP"/>
+	<package name="solicitud" namespace="/" extends="tiles-default">         
+     
+	    <interceptors>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">2097152</param>
+					<param name="allowedTypes">application/pdf</param>
+				</interceptor-ref>
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams"> dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods"> input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods"> input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+	    
+	   <global-results>
+	   		<result name="listaSolicitud" type="tiles">d_listasol</result>
+	   		<result name="detalleObs" type="tiles">d_detalleObs</result>
+	   		<result name="detalleSus" type="tiles">d_detalleSus</result>
+	   		<result name="recargaAprobSol" type="tiles">d_aprobarSol</result>
+	   		<result name="registraProy" type="tiles">d_registraProy</result>
+	   		<result name="desapruebaProy" type="tiles">d_desapruebaProy</result>         
+	   </global-results>
+	    
+       <action  name="UploadUserDoc"
+        		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+        		method="registrarSolicitud">			
+			<interceptor-ref name="fileUploadStack" />
+        	<result name="input" type="tiles">d_regSolicitud</result>
+       		<result name="error">index.jsp</result>
+        </action>
+         
+       <action  name="listarSol" 
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="listarSolicitudes">
+       </action>
+       
+       <action  name="detalleObs" 
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="detalleObs">       		
+       </action>
+       
+       <action  name="detSustento"
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="detalleSus">           
+       </action>
+       
+       <action  name="regSol">
+           <result type="tiles">d_regSolicitud</result>         
+       </action>
+       
+       <action  name="vovlerListaSol"
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="listarSolicitudes">       		
+       </action>
+       
+       <action  name="bajarSol"
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="descargarSolicitud">
+          <result name="bajando" type="stream">
+             	<param name="contentType">application/pdf</param>
+	  			<param name="inputName">archivoIS</param>
+	  			<param name="contentDisposition">attachment;filename="${nomFile}"</param>
+	  			<param name="bufferSize">1024</param>
+          </result>           
+       </action>
+       
+       <action  name="aprobarSol"
+           		class="com.cibertec.dawi.proy.actions.ActionSolicitud"
+           		method="aprobarSolicitud">
+       </action>
+     </package>
+    
+</struts>	
+    

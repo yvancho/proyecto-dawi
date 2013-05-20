@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+   
+     <typeAliases>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" alias="usuarioDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.TipoDocIdDTO" alias="tipodocDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.GeneroDTO" alias="generoDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.PaisDTO" alias="paisDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.DistritoDTO" alias="distritoDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.EstadoCivilDTO" alias="estCivDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.TipoUsuarioDTO" alias="tipoUsuDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.usuario.AreaDTO" alias="areaDTO"/>
+         
+         <typeAlias type="com.cibertec.dawi.proy.beans.solicitud.SolicitudDTO" alias="solDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.solicitud.EstadoSolicitud" alias="estadoSolDTO"/>
+         
+         <typeAlias type="com.cibertec.dawi.proy.beans.proyecto.ProyectoDTO" alias="proyDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.proyecto.MonedaDTO" alias="monedaDTO"/>
+         <typeAlias type="com.cibertec.dawi.proy.beans.proyecto.PrioridadProyectoDTO" alias="prioridadDTO"/>
+     </typeAliases>
+    
+	<environments default="proyectoDAWI">
+	    <environment id="proyectoDAWI">
+	        <transactionManager type="JDBC"></transactionManager>
+	        <dataSource type="UNPOOLED">
+	            <property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost/bd_proydawi" />
+				<property name="username" value="root" />
+				<property name="password" value="" />
+	        </dataSource>
+	    </environment>
+	</environments>
+	
+	<mappers>	    	    
+		<package name="com/cibertec/dawi/proy/daos/mybatis/mappers/usuario"/>		
+		<package name="com/cibertec/dawi/proy/daos/mybatis/mappers/solicitud"/>
+		<package name="com/cibertec/dawi/proy/daos/mybatis/mappers/proyecto"/>		
+	</mappers>
+</configuration>

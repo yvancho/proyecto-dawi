@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC   
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>	
+
+    <package name="usuario" namespace="/" extends="tiles-default">
+    
+        <global-results>
+            <result name="existeUsuario" type="tiles">d_bienvenida</result>
+            <result name="loginUsuario" type="tiles">d_ingreso</result>
+            <result name="logoutUsuario" type="tiles">d_ingreso</result>
+            <result name="mantenUsuario" type="tiles">d_manten</result>
+            <result name="actualizaUsuario" type="tiles">d_actual</result>
+            <result name="eliminaUsuario" type="tiles">d_elimina</result>
+            <result name="detalleUsuario" type="tiles">d_detaUsu</result>
+            <result name="listaUsuarios" type="tiles">d_listausu</result>      
+            
+            <result name="registraSolic" type="tiles">d_regSolicitud</result>
+            <result name="aprobarSol" type="tiles">d_aprobarSol</result>
+        </global-results>
+        
+    	<action name="ingresarSistema"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="validarUsuario">
+    	</action>
+      
+    	<action name="cancelaIngreso" 
+ 	 			class="com.cibertec.dawi.proy.actions.ActionUsuario"
+ 	 			method="cancelaIngreso">
+        	<result name="cancelar">/index.jsp</result>     
+     	</action>
+     	
+     	
+     	<action name="cancelaActEliDet" 
+ 	 			class="com.cibertec.dawi.proy.actions.ActionUsuario"
+ 	 			method="cancelaActEliDet"> 
+     	</action>
+     	 	
+    	<action name="logout"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="logout">
+    	</action>
+    	
+    	
+    	<!-- ========= MANTENIMIENTO DE USUARIOS =========== -->
+    	
+    	<action name="listarUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="listarUsuarios">
+    	</action>
+    	
+    	<action name="buscarUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="listarUsuariosByNom">
+    	</action>
+    	
+    	<action name="registrarUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="registrarUsuario">
+    	</action>
+    	
+    	<action name="updateUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="actualizaUsuario">
+    	</action>
+    	
+    	<action name="deleteUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="eliminarUsuario">
+    	</action>
+    	
+    	<action name="regUsu">
+				<result type="tiles">d_manten</result>
+		</action>
+		
+		<action name="loadUsu"
+				class="com.cibertec.dawi.proy.actions.ActionUsuario"
+				method="cargarUsuario">			
+		</action>
+    	
+    </package>
+
+</struts>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration
+2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition
+        name="d_ingreso"
+        template="/plantilla/plantilla.jsp">
+        
+        <put-attribute name="header" value="/pages/header.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuLogin.jsp"></put-attribute>
+        <put-attribute name="menuUsuario" value="/pages/menu/menuUsuario.jsp"></put-attribute>
+        <put-attribute name="body" value="/pages/body/ingresarSistema.jsp"></put-attribute>
+        <put-attribute name="footer" value="/pages/footer.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_bienvenida" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/bienvenida.jsp"></put-attribute>
+    </definition>
+    
+    <!-- ======================== MANTENIMIENTO DE USUARIOS =========================== -->
+    
+    <definition name="d_manten" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/manten/registroUsuario.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuAdmin.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_actual" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/manten/actualizaUsuario.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuAdmin.jsp"></put-attribute>
+    </definition>
+    
+     <definition name="d_elimina" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/manten/eliminaUsuario.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuAdmin.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_detaUsu" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/manten/detalleUsuario.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuAdmin.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_listausu" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/manten/listaUsuarios.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuAdmin.jsp"></put-attribute>
+    </definition>
+    
+    <!-- ========================= SOLICITUD ========================== -->
+    <definition name="d_regSolicitud" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/solicitud/RegSolicitud.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuJefe.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_regResultado" extends="d_ingreso">
+    	<put-attribute name ="body" value="/pages/body/results/exito.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_listasol" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/solicitud/listaSolicitudes.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuJefe.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_detalleObs" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/solicitud/obserSolicitud.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuJefe.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_detalleSus" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/solicitud/sustDesSolDetalle.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuJefe.jsp"></put-attribute>
+    </definition>
+    
+    <!-- ========================= PROYECTO ========================== -->
+    <definition name="d_aprobarSol" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/proyecto/AprobarSolicitud.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuGpro.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_registraProy" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/proyecto/registrarProyecto.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuGpro.jsp"></put-attribute>
+    </definition>
+    
+    <definition name="d_desapruebaProy" extends="d_ingreso">
+        <put-attribute name="body" value="/pages/body/proyecto/regSustDesSol.jsp"></put-attribute>
+        <put-attribute name="menu" value="/pages/menu/menuGpro.jsp"></put-attribute>
+    </definition>
+</tiles-definitions>

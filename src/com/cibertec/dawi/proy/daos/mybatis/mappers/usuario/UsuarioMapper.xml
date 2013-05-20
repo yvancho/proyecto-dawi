@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.usuario.UsuarioMapper">
+
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" id="rm_listaUsu">
+		<id column="idNumUsu" jdbcType="INTEGER" property="idNumUsu" />
+		<result column="idUsu" jdbcType="VARCHAR" property="idUsu" />
+		<result column="clave" jdbcType="VARCHAR" property="clave" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="idTipoDocId" jdbcType="INTEGER" property="tipoDoc.idTipoDoc" />
+		<result column="nroDocId" jdbcType="VARCHAR" property="nroDocID" />
+		<result column="nomUsu" jdbcType="VARCHAR" property="nomUsu" />
+		<result column="apeUsu" jdbcType="VARCHAR" property="apeUsu" />
+		<result column="idGen" jdbcType="CHAR" property="genero.idGen" />
+		<result column="idPais" jdbcType="VARCHAR" property="pais.idPais" />
+		<result column="idDist" jdbcType="INTEGER" property="distrito.idDist" />
+		<result column="direccion" jdbcType="VARCHAR" property="direUsu" />
+		<result column="fecNac" jdbcType="DATE" property="fecNac" />
+		<result column="idEstCivil" jdbcType="CHAR" property="estadoCivil.idEstCiv" />
+		<result column="telefono" jdbcType="VARCHAR" property="telefono" />
+		<result column="idArea" jdbcType="INTEGER" property="area.idArea" />
+		<result column="idTipoUsu" jdbcType="VARCHAR" property="tipoUsu.idTipoUsu" />
+		<result column="fecContrato" jdbcType="DATE" property="fecContrato" />
+		<result column="idResonsable" jdbcType="INTEGER" property="manager.idnumUsu" />
+		<result column="idEstUsu" jdbcType="INTEGER" property="estadoUsu.idEstUsu" />
+	</resultMap>
+	
+	<!-- ================= RESULT MAPS =================== -->
+	
+	<!-- RM para la sesion del usuario -->
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" id="rm_getUsuSes">	    
+		<result column="idUsu" jdbcType="VARCHAR" property="idUsu" />
+		<result column="idTipoUsu" jdbcType="VARCHAR" property="tipoUsu.idTipoUsu" />
+	</resultMap>
+	
+	<!-- RM para la busqueda de un usuario especifico filtrado por id, nombre o apelledo -->
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" id="rm_listarUsuariosByNom">	    
+		<id column="idNumUsu" jdbcType="INTEGER" property="idNumUsu" />
+		<result column="idUsu" jdbcType="VARCHAR" property="idUsu" />
+		<result column="nomUsu" jdbcType="VARCHAR" property="nomUsu" />
+		<result column="apeUsu" jdbcType="VARCHAR" property="apeUsu" />
+		<result column="descTipoUsu" jdbcType="VARCHAR" property="tipoUsu.descTipoUsu" />
+	</resultMap>
+	
+	<!-- RM para el Detalle de Usuario -->
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" id="rm_detalleUsu">
+		<id column="idNumUsu" jdbcType="INTEGER" property="idNumUsu" />
+		<result column="idUsu" jdbcType="VARCHAR" property="idUsu" />
+		<result column="nomUsu" jdbcType="VARCHAR" property="nomUsu" />
+		<result column="apeUsu" jdbcType="VARCHAR" property="apeUsu" />
+		<result column="descTipoDocId" jdbcType="VARCHAR" property="tipoDoc.descTipoDoc" />
+		<result column="nroDocId" jdbcType="VARCHAR" property="nroDocID" />
+		<result column="descPais" jdbcType="VARCHAR" property="pais.descPais" />
+		<result column="descDist" jdbcType="VARCHAR" property="distrito.descDist" />
+		<result column="direccion" jdbcType="VARCHAR" property="direUsu" />
+		<result column="fecNac" jdbcType="DATE" property="fecNac" />
+		<result column="descGen" jdbcType="VARCHAR" property="genero.descGen" />
+		<result column="descEstCivil" jdbcType="VARCHAR" property="estadoCivil.descEstCiv" />
+		<result column="telefono" jdbcType="VARCHAR" property="telefono" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="descArea" jdbcType="VARCHAR" property="area.descArea" />
+		<result column="descTipoUsu" jdbcType="VARCHAR" property="tipoUsu.descTipoUsu" />
+		<result column="fecContrato" jdbcType="DATE" property="fecContrato" />
+	</resultMap>
+
+	<!-- RM para Listar los usuarios que tienen al menos 1 proyecto -->
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.UsuarioDTO" id="rm_listarDesAnsResp">
+		<id column="id_num" jdbcType="INTEGER" property="idNumUsu" />
+		<result column="id_usu" jdbcType="VARCHAR" property="idUsu" />
+		<result column="nom_usu" jdbcType="VARCHAR" property="nomUsu" />
+		<result column="ape_usu" jdbcType="VARCHAR" property="apeUsu" />
+		<result column="resp_usu" jdbcType="INTEGER" property="esResponsable" />
+		<association javaType="tipoUsuDTO" property="tipoUsu">
+			<result column="tipo_usu" jdbcType="VARCHAR" property="descTipoUsu"/>
+		</association>
+	</resultMap>
+	
+	<!-- ================= CONSULTAS ===================== -->
+	<select id="validarUsuario" parameterType="usuarioDTO" resultType="INTEGER">
+		SELECT count(*) FROM TB_USUARIO
+		WHERE idUsu = #{idUsu, jdbcType=VARCHAR} AND
+		clave = #{clave, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getUsuSes" parameterType="java.lang.String" resultMap="rm_getUsuSes">
+	  	SELECT idUsu, idTipoUsu 
+		FROM tb_usuario
+	   	WHERE idUsu=#{idUsu}
+	</select>
+		
+	<select id="listarUsuarios" parameterType="usuarioDTO" resultMap="rm_listaUsu">
+		SELECT *
+		FROM tb_usuario
+		WHERE idEstUsu=1
+	</select>
+
+	<select id="listarUsuariosByNom" parameterType="usuarioDTO"
+		resultMap="rm_listarUsuariosByNom">
+		SELECT  u.idNumUsu, u.idUsu, u.nomUsu, u.apeUsu,
+				t.descTipoUsu
+		FROM tb_usuario u JOIN tb_tipousuario t
+		ON t.idtipousu = u.idTipoUsu
+		WHERE
+			CONCAT(idUsu,nomUsu,apeUsu)
+			LIKE concat('%',#{nomUsu},'%')
+		  AND
+		  	idEstUsu=1
+	</select>
+	
+	<select id="getUsuarioByPK" parameterType="java.lang.Integer" resultMap="rm_listaUsu">
+	    SELECT * from tb_usuario
+	    WHERE idNumUsu = #{idNumUsu}
+	</select>
+	
+	<!-- obtener el detalle del usuario -->
+	<select id="getUsuarioByPkDETALLE" 
+	    	parameterType="java.lang.Integer" 
+	    	resultMap="rm_detalleUsu">
+		SELECT  idNumUsu, idUsu, nomUsu, apeUsu, descTipoDocId, nroDocid, 
+        		descPais, descDist, direccion, fecNac,
+        		descGen, descEstCivil, telefono, email,
+        		descArea, descTipoUsu, fecContrato
+		FROM tb_usuario u
+    		JOIN tb_tipoDocId td
+        		ON u.idTipoDocId=td.idTipoDocId
+			JOIN tb_pais p
+    			ON u.idPais=p.idPais
+			JOIN tb_distrito d
+    			ON u.idDist=d.idDist
+			JOIN tb_genero g
+    			ON u.idGen=g.idGen
+			JOIN tb_estadocivil ec
+    			ON u.idEstCivil=ec.idEstCivil
+			JOIN tb_area ar
+    			ON u.idArea=ar.idArea
+			JOIN tb_tipousuario tu
+    			ON u.idtipousu=tu.idtipousu
+	    WHERE idNumUsu = #{idNumUsu}
+	</select>
+
+	<!-- Listar los usuarios que tienen al menos 1 proyecto -->
+	<select id="listarDesAnsResp" resultMap="rm_listarDesAnsResp">
+		Select  u.idNumUsu as id_num,
+        		u.idUsu as id_usu,
+        		u.nomUsu as nom_usu,
+        		u.apeUsu as ape_usu,
+        		tu.descTipoUsu as tipo_usu,   
+        		COALESCE(count(dp.idProy),0) as cant_proy,
+        		u.esResponsable as resp_usu        
+		from tb_detalleproyecto dp
+		right join tb_usuario u
+    	on dp.idNumUsu = u.idNumUsu
+		JOIN tb_tipousuario tu
+    	on u.idTipoUsu=tu.idTipoUsu
+		WHERE u.idTipoUsu in ('DES','ANS')
+		group by u.idNumUsu
+		having count(dp.idProy) &lt; 2
+		order by tipo_usu desc;
+	</select>
+	<!-- ================ MANTENIMIENTO ===================-->
+	
+	<insert id="registrarUsuario" parameterType="usuarioDTO">
+		INSERT INTO
+		tb_usuario
+		(
+		idUsu, clave, email, idTipoDocId, nroDocId,
+		nomUsu, apeUsu,	idGen, idPais, idDist,
+		direccion, fecNac, idEstCivil, telefono,
+		idArea,	idTipoUsu, fecContrato
+		)
+		VALUES
+		(
+		#{idUsu}, #{clave}, #{email}, #{tipoDoc.idTipoDoc}, #{nroDocID},
+		#{nomUsu}, #{apeUsu}, #{genero.idGen}, #{pais.idPais},#{distrito.idDist},
+		#{direUsu}, #{fecNac}, #{estadoCivil.idEstCiv}, #{telefono},
+		#{area.idArea},	#{tipoUsu.idTipoUsu}, #{fecContrato}
+		)
+	</insert>
+	
+	<update id="actualizarUsuario" parameterType="usuarioDTO">
+	    UPDATE tb_usuario
+	    SET	idUsu = #{idUsu}, 
+	    	clave = #{clave}, 
+	    	email = #{email}, 
+	    	idTipoDocId = #{tipoDoc.idTipoDoc} , 
+	    	nroDocId = #{nroDocID},
+			nomUsu = #{nomUsu} , 
+			apeUsu = #{apeUsu},
+			idGen = #{genero.idGen}, 
+			idPais = #{pais.idPais}, 
+			idDist = #{distrito.idDist},
+			direccion = #{direUsu}, 
+			fecNac = #{fecNac}, 
+			idEstCivil = #{estadoCivil.idEstCiv},
+			telefono =  #{telefono},
+			idArea= #{area.idArea},
+			idTipoUsu = #{tipoUsu.idTipoUsu}, 
+			fecContrato = #{fecContrato}
+	    WHERE idNumUsu = #{idNumUsu}
+	</update>
+	
+	<update id="actEstadoUsuario" parameterType="usuarioDTO">
+	    UPDATE tb_usuario
+	    SET	idEstUsu = 0
+	    WHERE idNumUsu = #{idNumUsu}
+	</update>
+	
+	<delete id="eliminarUsuaio" parameterType="usuarioDTO">
+	    DELETE from tb_usuario
+	    WHERE idNumUsu = #{idNumUsu}
+	</delete>
+
+</mapper>

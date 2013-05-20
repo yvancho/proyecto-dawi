@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.usuario.EstadoCivilMapper">
+
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.EstadoCivilDTO" id="rm_listaEstCiv">
+		<id column="idEstCivil" jdbcType="CHAR" property="idEstCiv" />
+		<result column="descEstCivil" jdbcType="VARCHAR" property="descEstCiv" />
+	</resultMap>
+
+	<select id="listarEstCiv" parameterType="estCivDTO"
+		resultMap="rm_listaEstCiv">
+		SELECT * FROM tb_estadocivil
+	</select>
+	
+</mapper>

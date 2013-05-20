@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.usuario.GeneroMapper">
+
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.GeneroDTO" id="rm_listaGeneros">
+		<id column="idGen" jdbcType="CHAR" property="idGen" />
+		<result column="descGen" jdbcType="VARCHAR" property="descGen" />
+	</resultMap>
+
+	<select id="listarGeneros" 
+	    	parameterType="generoDTO"
+			resultMap="rm_listaGeneros">
+		SELECT * FROM tb_genero
+		ORDER BY 1 desc;
+	</select>
+	
+</mapper>

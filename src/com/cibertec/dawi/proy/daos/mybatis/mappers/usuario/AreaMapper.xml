@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.usuario.AreaMapper">
+
+	<resultMap type="com.cibertec.dawi.proy.beans.usuario.AreaDTO" id="rm_listarAreas">
+		<id column="idArea" jdbcType="INTEGER" property="idArea" />
+		<result column="descArea" jdbcType="VARCHAR" property="descArea" />
+	</resultMap>
+
+	<select id="listarAreas" 
+	    	parameterType="areaDTO"
+			resultMap="rm_listarAreas">
+		SELECT *
+		FROM tb_area
+	</select>
+	
+</mapper>

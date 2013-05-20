@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibertec.dawi.proy.daos.mybatis.mappers.solicitud.SolicitudMapper">
+
+	<!--  ==================== RESULT MAPS ==================== -->
+	<!-- RM para listar las solicitudes por area -->
+    <resultMap type="solDTO" id="rm_listaSolArea">
+        <id column="idSol" jdbcType="INTEGER" property="idSol"/>
+        <result column="descSol" jdbcType="VARCHAR" property="descSol"/>
+        <result column="obsSol" jdbcType="LONGVARCHAR" property="obsSol"/>
+        <result column="susDes" jdbcType="LONGVARCHAR" property="susDes"/>
+        <result column="urlSol" jdbcType="VARCHAR" property="urlSol"/>
+        <result column="fecRegSol" jdbcType="DATE" property="fecRegSol"/>
+        <association javaType="areaDTO" property="area">
+            <result column="id_area" property="idArea"/>
+            <result column="desc_area" property="descArea"/>
+        </association>
+        <association javaType="estadoSolDTO" property="estSol">
+            <result column="desc_est" property="descEstSol"/>
+        </association>
+    </resultMap>
+    
+    <!-- RM para listar las solicitudes por estado -->
+    <resultMap type="solDTO" id="rm_listaSolEst">
+        <id column="idSol" jdbcType="INTEGER" property="idSol"/>
+        <result column="descSol" jdbcType="VARCHAR" property="descSol"/>
+        <result column="obsSol" jdbcType="LONGVARCHAR" property="obsSol"/>
+        <result column="urlSol" jdbcType="VARCHAR" property="urlSol"/>
+        <result column="fecRegSol" jdbcType="DATE" property="fecRegSol"/>
+        <association javaType="areaDTO" property="area">
+            <result column="desc_area" property="descArea"/>
+        </association>
+        <association javaType="estadoSolDTO" property="estSol">
+            <result column="desc_est" property="descEstSol"/>
+        </association>
+    </resultMap>
+    
+	<!-- ============ CONSULTAS ================ -->
+	
+	<!-- Lista de solicitudes por estado -->
+	<select id="listarSolEst" resultMap="rm_listaSolEst">
+	    SELECT  idSol, descSol, obsSol, urlSol, 
+       			a.descArea as desc_area, fecRegSol
+		FROM tb_solicitud s
+		JOIN tb_area a 
+    		ON s.idArea = a.idArea
+		JOIN tb_estadoSolicitud e
+    		ON s.idEstSol = e.idEstSol
+		WHERE s.idEstSol = 0
+	</select>
+	
+	<!-- Lista de solicitudes por area -->
+	<select id="listarSolArea" resultMap="rm_listaSolArea">
+	   	SELECT 	idSol, descSol, obsSol, susDes, urlSol, 
+       			s.idArea as id_area, 
+       			a.descArea as desc_area, 
+       			fecRegSol, 
+       			e.descEstSol as desc_est
+		FROM tb_solicitud s
+		JOIN tb_area a 
+    		ON s.idArea = a.idArea
+		JOIN tb_estadoSolicitud e
+    		ON s.idEstSol = e.idEstSol
+		WHERE s.idArea = #{area}
+	</select>
+		
+	<!-- Obtener el area del usuario que registra una nueva SRQ -->
+	<select id="getAreaUsu" parameterType="java.lang.String" resultType="INTEGER">
+	    SELECT idArea FROM tb_usuario
+		WHERE  idUsu = #{idUsu};
+	</select>
+	
+	<!-- Obtener el campo Observacion de una solicitud especifica -->
+	<select id="getSolicitudByPkDETAOBS" 
+	    	parameterType="java.lang.Integer" 
+	    	resultType="STRING">        
+	    SELECT obsSol FROM tb_solicitud
+		WHERE idSol=#{idSol}
+	</select>
+	
+	<!-- Obtener el campo Sustento de Desaprobacion de una solicitud especifica -->
+	<select id="getSolicitudByPkDETASUS" 
+	    	parameterType="java.lang.Integer" 
+	    	resultType="STRING">        
+	    SELECT susDes FROM tb_solicitud
+		WHERE idSol=#{idSol}
+	</select>
+	
+	<!-- Obtener la Ruta de una solicitud especifica -->
+	<select id="getRutaSolByPK"
+	    	parameterType="java.lang.Integer" 
+	    	resultType="STRING">     
+	    SELECT urlSol FROM tb_solicitud
+		WHERE idSol=#{idSol}
+	</select>
+	
+	<!-- Contar solicitudes aprobadas -->
+	<select id="contarSolAprob" resultType="INTEGER">
+	    SELECT count(*) from tb_solicitud
+		WHERE idEstSol=1
+	</select>
+	
+	<!-- Obtener una solicitud por su PK -->
+	<select id="getSolicitudByPK" 
+	    	resultMap="rm_listaSolArea"
+	    	parameterType="java.lang.Integer" >
+	    SELECT 	idSol, descSol, obsSol, susDes, urlSol, 
+       			s.idArea as id_area, 
+       			a.descArea as desc_area, 
+       			fecRegSol, 
+       			e.descEstSol as desc_est
+		FROM tb_solicitud s
+		JOIN tb_area a 
+    		ON s.idArea = a.idArea
+		JOIN tb_estadoSolicitud e
+    		ON s.idEstSol = e.idEstSol
+		WHERE idSol = #{idSol}
+	</select>
+	
+	<!-- Registrar una nueva SRQ -->
+	<insert id="registrarSolicitud" parameterType="solDTO">
+	    INSERT INTO 
+	    tb_solicitud 
+		(
+		descSol, obsSol, urlSol, 
+		idArea,	idUsu, fecRegSol
+		) 
+		VALUES 
+		(
+		#{descSol}, #{obsSol}, #{urlSol}, 
+		#{area.idArea},	#{idUsu}, #{fecRegSol}
+		)
+	</insert>
+	
+	
+</mapper>
